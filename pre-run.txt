@@ -1,0 +1,241 @@
+===============================================================================
+                    PRE-RUN SETUP GUIDE FOR FIRST-TIME DEVELOPERS
+===============================================================================
+
+This guide will help you set up everything needed to run the Microsoft Teams Bot
+with API integration project. Follow these steps in order.
+
+===============================================================================
+STEP 1: INSTALL NODE.JS
+===============================================================================
+
+Node.js is a JavaScript runtime that allows you to run JavaScript on your computer
+(not just in web browsers).
+
+FOR WINDOWS:
+1. Go to https://nodejs.org/
+2. Download the "LTS" version (Long Term Support - most stable)
+3. Run the downloaded .msi file
+4. Follow the installation wizard (accept all defaults)
+5. Restart your computer
+
+FOR MAC:
+1. Go to https://nodejs.org/
+2. Download the "LTS" version
+3. Run the downloaded .pkg file
+4. Follow the installation wizard
+5. Open Terminal and restart it
+
+FOR LINUX (Ubuntu/Debian):
+1. Open Terminal
+2. Run: sudo apt update
+3. Run: sudo apt install nodejs npm
+
+VERIFY INSTALLATION:
+Open your terminal/command prompt and type:
+  node --version
+  npm --version
+
+You should see version numbers (like v18.17.0 and 9.6.7).
+If you see "command not found", the installation didn't work.
+
+===============================================================================
+STEP 2: INSTALL A CODE EDITOR (OPTIONAL BUT RECOMMENDED)
+===============================================================================
+
+While you can use any text editor, Visual Studio Code is recommended for beginners:
+
+1. Go to https://code.visualstudio.com/
+2. Download for your operating system
+3. Install it
+4. Open the project folder in VS Code: File > Open Folder
+
+===============================================================================
+STEP 3: UNDERSTAND THE PROJECT STRUCTURE
+===============================================================================
+
+Your project folder contains these important files:
+
+📁 Microsoft bot/
+├── 📄 index.js              - Main bot code (Teams bot logic)
+├── 📄 simple-server.js      - Simple API server with hello world endpoint
+├── 📄 package.json          - Project configuration and dependencies
+├── 📄 .env                  - Environment variables (configuration)
+├── 📄 .env.example          - Example environment file
+├── 📄 manifest.json         - Teams app configuration
+├── 📄 README.md             - Detailed project documentation
+└── 📄 pre-run.txt           - This file!
+
+===============================================================================
+STEP 4: INSTALL PROJECT DEPENDENCIES
+===============================================================================
+
+Dependencies are external code libraries that your project needs to work.
+
+1. Open terminal/command prompt
+2. Navigate to your project folder:
+   
+   FOR WINDOWS:
+   cd "C:\path\to\your\Microsoft bot"
+   
+   FOR MAC/LINUX:
+   cd "/path/to/your/Microsoft bot"
+   
+   TIP: You can drag the folder into terminal to get the path automatically!
+
+3. Install dependencies by running:
+   npm install
+
+This will create a "node_modules" folder with all the required libraries.
+It might take a few minutes and show lots of text - this is normal!
+
+===============================================================================
+STEP 5: UNDERSTAND WHAT THE PROJECT DOES
+===============================================================================
+
+This project creates TWO servers that work together:
+
+SERVER 1 - Simple API Server (Port 3000):
+- A basic web server that responds with "Hello World!"
+- Runs at: http://localhost:3000
+- Has endpoints: /hello, /health, /
+
+SERVER 2 - Microsoft Teams Bot (Port 3978):
+- A bot that can be added to Microsoft Teams
+- Listens to conversations in Teams
+- Makes API calls to Server 1 every 10 seconds
+- Runs at: http://localhost:3978
+
+===============================================================================
+STEP 6: RUNNING THE PROJECT
+===============================================================================
+
+You need to run BOTH servers for the full functionality:
+
+TERMINAL/COMMAND PROMPT 1 (Simple API Server):
+1. Navigate to project folder
+2. Run: node simple-server.js
+3. You should see: "Simple API server running at http://localhost:3000"
+4. Keep this terminal open!
+
+TERMINAL/COMMAND PROMPT 2 (Teams Bot):
+1. Open a NEW terminal/command prompt
+2. Navigate to the same project folder
+3. Run: npm start
+4. You should see: "restify listening on port 3978"
+5. Keep this terminal open too!
+
+TESTING:
+- Open your web browser
+- Go to: http://localhost:3000/hello
+- You should see a JSON response with "Hello World!"
+
+===============================================================================
+STEP 7: WHAT YOU'LL SEE WHEN RUNNING
+===============================================================================
+
+Simple Server Terminal will show:
+  Simple API server running at http://localhost:3000
+  Try: http://localhost:3000/hello
+  API call received at 2025-01-01T12:00:00.000Z
+  API call received at 2025-01-01T12:00:10.000Z
+  (Every 10 seconds)
+
+Bot Terminal will show:
+  Starting periodic API calls every 5 minutes...
+  restify listening on port 3978
+  Making scheduled API call...
+  API Response: { message: 'Hello World!', ... }
+
+===============================================================================
+STEP 8: TROUBLESHOOTING COMMON ISSUES
+===============================================================================
+
+PROBLEM: "node: command not found"
+SOLUTION: Node.js isn't installed properly. Repeat Step 1.
+
+PROBLEM: "npm: command not found"
+SOLUTION: npm comes with Node.js. Reinstall Node.js.
+
+PROBLEM: "Cannot find module"
+SOLUTION: Run "npm install" in the project folder.
+
+PROBLEM: "Port 3000 already in use"
+SOLUTION: Another program is using port 3000. Either:
+- Close other programs
+- Or change the port in simple-server.js (line: const port = 3000;)
+
+PROBLEM: "Port 3978 already in use"
+SOLUTION: Change the PORT in .env file or kill existing processes.
+
+PROBLEM: API calls failing
+SOLUTION: Make sure the simple server (port 3000) is running first!
+
+===============================================================================
+STEP 9: STOPPING THE SERVERS
+===============================================================================
+
+To stop either server:
+- Go to the terminal where it's running
+- Press: Ctrl + C (Windows/Linux) or Cmd + C (Mac)
+- The server will stop
+
+===============================================================================
+STEP 10: NEXT STEPS FOR TEAMS INTEGRATION
+===============================================================================
+
+To actually use this bot in Microsoft Teams, you'll need to:
+
+1. Create a Microsoft Azure account
+2. Register your bot in Azure Bot Service
+3. Get App ID and App Password
+4. Update the .env file with your credentials
+5. Upload the manifest.json to Teams
+
+See README.md for detailed Teams integration instructions.
+
+===============================================================================
+HELPFUL COMMANDS REFERENCE
+===============================================================================
+
+Check if Node.js is installed:     node --version
+Check if npm is installed:         npm --version
+Install project dependencies:      npm install
+Start the Teams bot:              npm start
+Start the simple server:          node simple-server.js
+Stop any running process:         Ctrl + C (or Cmd + C on Mac)
+
+===============================================================================
+NEED HELP?
+===============================================================================
+
+If you're stuck:
+1. Read the error message carefully
+2. Check that both Node.js and npm are installed
+3. Make sure you're in the correct project folder
+4. Try running "npm install" again
+5. Check that no other programs are using ports 3000 or 3978
+
+Remember: Programming can be frustrating at first, but every developer has been
+where you are now. Take breaks, read error messages carefully, and don't be
+afraid to start over if needed!
+
+===============================================================================
+
+
+How It Works:
+✅ Bot is currently running on port 3978 and making periodic API calls every 5 minutes
+✅ Listens to conversations - stores conversation references for proactive messaging
+✅ Simple commands - users can type "status" or "api" to interact with the bot
+✅ Error handling - includes proper logging and error management
+
+Next Steps to Deploy to Teams:
+Register your bot in Azure Portal to get App ID and Password
+Update 
+.env
+ with your Microsoft App credentials
+Configure your API endpoint in the 
+.env
+ file
+Sideload the manifest into Microsoft Teams
+The bot is designed to be simple and straightforward as requested - no unnecessary complications. It will automatically start making API calls every 5 minutes once deployed and will notify Teams conversations about the scheduled calls.
